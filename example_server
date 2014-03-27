@@ -1,0 +1,11 @@
+server {
+    # you stuff here
+
+    # in order to use ldap_auth, you need to set the $request_server
+    set $request_server example_server;
+
+    # include the ldap_auth file, note that it uses the location /ldap_auth
+    include ldap_auth;
+
+    # your other stuff here
+}

@@ -1,0 +1,14 @@
+# this file should be included into other servers.
+# see example_server for usage
+# ldap_auth may be located where 'location' directive may be located
+
+auth_basic "Restriced Area";
+auth_request /ldap_auth;
+
+location = /ldap_auth {
+    # used so the ldap auth server may distinguish between requests from different servers
+	proxy_set_header Request-Site $request_server;
+    # the url for the ldap auth server
+	proxy_pass http://127.0.0.1:8081;
+	proxy_pass_request_body off;
+}
