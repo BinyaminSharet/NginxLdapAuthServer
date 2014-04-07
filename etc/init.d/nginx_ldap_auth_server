@@ -1,0 +1,24 @@
+#!/sbin/runscript
+# Copyright 1999-2011 Gentoo Technologies, Inc.
+# Distributed under the terms of the GNU General Public Licence v2
+# $Header: /var/cvsroot/gentoo-x86/dev-lang/python/files/pydoc.init,v 1.4 2011/10/27 13:56:55 neurogeek Exp $
+
+depend() {
+	need net
+	after nginx
+}
+
+start() {
+
+	ebegin "Starting nginx ldap access control"
+	start-stop-daemon --start --background --make-pidfile \
+			  --pidfile /var/run/nginx_ldap_access_control.pid \
+			  --exec ${EXEC_FILE} -- ${CONFIG_FILE} ${CACHE_FILE}
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping nginx ldap access control"
+	start-stop-daemon --stop --quiet --pidfile /var/run/nginx_ldap_access_control.pid
+	eend $?
+}
